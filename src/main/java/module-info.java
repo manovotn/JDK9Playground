@@ -4,4 +4,8 @@ module org.none.jdk9playground {
     requires javax.inject;
     requires weld.core.impl;
     requires weld.environment.common;
+
+    requires javax.servlet.api;
+    requires weld.spi;
+    requires weld.servlet.core;
 }
