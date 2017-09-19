@@ -1,6 +1,6 @@
 /*
  * JBoss, Home of Professional Open Source
- * Copyright 2016, Red Hat, Inc., and individual contributors
+ * Copyright 2017, Red Hat, Inc., and individual contributors
  * by the @authors tag. See the copyright.txt in the distribution for a
  * full listing of individual contributors.
  *
@@ -16,24 +16,20 @@
  */
 package org.none.just.test.jdk9playground;
 
-import org.jboss.weld.environment.se.Weld;
-import org.jboss.weld.environment.se.WeldContainer;
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
 
 /**
  *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
-public class Runner {
+@ApplicationScoped
+public class AppScopedBean {
 
-    public static final void main(final String[] args) throws Exception {
-        Weld weld = new Weld();
-        weld.disableDiscovery().addBeanClasses(AppScopedBean.class, SomeDependentBean.class);
-        try (WeldContainer container = weld.initialize()) {
-            // grab BM as a built-in bean test
-            container.getBeanManager();
-            // grab some other bean and do hello world
-            System.out.println(container.select(AppScopedBean.class).get().ping());
-            System.out.println(container.select(SomeDependentBean.class).get().ping());
-        }
+    @Inject
+    private SomeDependentBean depBean;
+
+    public String ping() {
+        return "Hello world from injected bean: " + depBean.ping();
     }
 }
