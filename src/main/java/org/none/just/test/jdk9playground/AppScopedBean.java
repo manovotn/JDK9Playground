@@ -17,12 +17,15 @@
 package org.none.just.test.jdk9playground;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.context.Initialized;
+import javax.enterprise.event.Observes;
 import javax.inject.Inject;
 
 /**
  *
  * @author <a href="mailto:manovotn@redhat.com">Matej Novotny</a>
  */
+@FooBinding
 @ApplicationScoped
 public class AppScopedBean {
 
@@ -32,4 +35,9 @@ public class AppScopedBean {
     public String ping() {
         return "Hello world from injected bean: " + depBean.ping();
     }
+
+    void observe(@Observes @Initialized(ApplicationScoped.class) Object event) {
+        System.out.println("Hello!");
+    }
+
 }

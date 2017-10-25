@@ -26,9 +26,7 @@ import org.jboss.weld.environment.se.WeldContainer;
 public class Runner {
 
     public static final void main(final String[] args) throws Exception {
-        Weld weld = new Weld();
-        weld.disableDiscovery().addBeanClasses(AppScopedBean.class, SomeDependentBean.class);
-        try (WeldContainer container = weld.initialize()) {
+        try (WeldContainer container = new Weld().initialize()) {
             // grab BM as a built-in bean test
             container.getBeanManager();
             // grab some other bean and do hello world
